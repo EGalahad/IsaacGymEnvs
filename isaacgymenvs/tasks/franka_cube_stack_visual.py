@@ -487,11 +487,7 @@ class FrankaCubeStackVisual(VecTask):
         
         self.gym.start_access_image_tensors(self.sim)
         self.obs_buf = torch.stack([cam_tensor[..., :3].flatten() for cam_tensor in self._cam_tensors]).type(torch.float32)
-        # torch.save(self._cam_tensors, "../../RLEnv/cam_tensors.pth")
         self.gym.end_access_image_tensors(self.sim)
-        torch.save(self._cam_tensors, "./cam_tensors.pth")
-        for i, (env_ptr, camera_handle) in enumerate(zip(self.envs, self.cams)):
-            self.gym.write_camera_image_to_file(self.sim, env_ptr, camera_handle, gymapi.IMAGE_COLOR, f"camera_env{i}.png")
 
         return self.obs_buf
 
